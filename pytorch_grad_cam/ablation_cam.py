@@ -59,7 +59,7 @@ class AblationCAM(BaseCAM):
         result = []
         sorted_indices = np.argsort(ablated_channels)
         ablated_channels = ablated_channels[sorted_indices]
-        new_scores = np.float32(new_scores)[sorted_indices]
+        new_scores = float(new_scores)[sorted_indices]
 
         for i in range(number_of_channels):
             if index < len(ablated_channels) and ablated_channels[index] == i:
@@ -84,7 +84,7 @@ class AblationCAM(BaseCAM):
         with torch.no_grad():
             outputs = self.model(input_tensor)
             handle.remove()
-            original_scores = np.float32(
+            original_scores = float(
                 [target(output).cpu().item() for target, output in zip(targets, outputs)])
 
         # Replace the layer with the ablation layer.
@@ -138,7 +138,7 @@ class AblationCAM(BaseCAM):
                     number_of_channels)
                 weights.extend(new_scores)
 
-        weights = np.float32(weights)
+        weights = float(weights)
         weights = weights.reshape(activations.shape[:2])
         original_scores = original_scores[:, None]
         weights = (original_scores - weights) / original_scores

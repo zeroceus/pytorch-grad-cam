@@ -16,4 +16,4 @@ def get_2d_projection(activation_batch):
         projection = reshaped_activations @ VT[0, :]
         projection = projection.reshape(activations.shape[1:])
         projections.append(projection)
-    return np.float32(projections)
+    return float(projections)

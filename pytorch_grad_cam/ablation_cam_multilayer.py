@@ -99,7 +99,7 @@ class AblationCAM(BaseCAM):
             original_scores = []
             for i in range(input_tensor.size(0)):
                 original_scores.append(outputs[i, target_category[i]])
-        original_scores = np.float32(original_scores)
+        original_scores = float(original_scores)
 
         self.set_ablation_layers()
 
@@ -126,7 +126,7 @@ class AblationCAM(BaseCAM):
                     score = self.model(batch_tensor)[:, category].cpu().numpy()
                     weights.extend(score)
 
-        weights = np.float32(weights)
+        weights = float(weights)
         weights = weights.reshape(activations.shape[:2])
         original_scores = original_scores[:, None]
         weights = (original_scores - weights) / original_scores

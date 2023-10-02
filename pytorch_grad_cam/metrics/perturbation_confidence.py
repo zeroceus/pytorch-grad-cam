@@ -22,7 +22,7 @@ class PerturbationConfidenceMetric:
                 outputs = model(input_tensor)
                 scores = [target(output).cpu().numpy()
                           for target, output in zip(targets, outputs)]
-                scores = np.float32(scores)
+                scores = float(scores)
 
         batch_size = input_tensor.size(0)
         perturbated_tensors = []
@@ -39,7 +39,7 @@ class PerturbationConfidenceMetric:
         scores_after_imputation = [
             target(output).cpu().numpy() for target, output in zip(
                 targets, outputs_after_imputation)]
-        scores_after_imputation = np.float32(scores_after_imputation)
+        scores_after_imputation = float(scores_after_imputation)
 
         if return_diff:
             result = scores_after_imputation - scores
@@ -61,7 +61,7 @@ class RemoveMostRelevantFirst:
         imputer = self.imputer
         if self.percentile != 'auto':
             threshold = np.percentile(mask.cpu().numpy(), self.percentile)
-            binary_mask = np.float32(mask < threshold)
+            binary_mask = float(mask < threshold)
         else:
             _, binary_mask = cv2.threshold(
                 np.uint8(mask * 255), 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
@@ -106,4 +106,4 @@ class AveragerAcrossThresholds:
         for percentile in self.percentiles:
             imputer = self.imputer(percentile)
             scores.append(imputer(input_tensor, cams, targets, model))
-        return np.mean(np.float32(scores), axis=0)
+        return np.mean(float(scores), axis=0)

@@ -171,7 +171,7 @@ class BaseCAM:
             cam = cam[:, 0, :, :]
             cams.append(cam)
 
-        cam = np.mean(np.float32(cams), axis=0)
+        cam = np.mean(float(cams), axis=0)
         return cam
 
     def __call__(self,

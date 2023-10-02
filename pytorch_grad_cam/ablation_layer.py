@@ -45,7 +45,7 @@ class AblationLayer(torch.nn.Module):
             normalized = normalized / np.max(normalized)
             score = (projection * normalized).sum() / normalized.sum()
             scores.append(score)
-        scores = np.float32(scores)
+        scores = float(scores)
 
         indices = list(np.argsort(scores))
         high_score_indices = indices[::-

@@ -34,4 +34,4 @@ class IncreaseInConfidence(CamMultImageConfidenceChange):
 
     def __call__(self, *args, **kwargs):
         scores = super(IncreaseInConfidence, self).__call__(*args, **kwargs)
-        return np.float32(scores > 0)
+        return float(scores > 0)

@@ -48,11 +48,11 @@ def show_cam_on_image(img: np.ndarray,
     heatmap = cv2.applyColorMap(np.uint8(255 * mask), colormap)
     if use_rgb:
         heatmap = cv2.cvtColor(heatmap, cv2.COLOR_BGR2RGB)
-    heatmap = np.float32(heatmap) / 255
+    heatmap = float(heatmap) / 255
 
     if np.max(img) > 1:
         raise Exception(
-            "The input image should np.float32 in the range [0, 1]")
+            "The input image should float in the range [0, 1]")
 
     if image_weight < 0 or image_weight > 1:
         raise Exception(
@@ -125,10 +125,10 @@ def show_factorization_on_image(img: np.ndarray,
         mask = cv2.cvtColor(mask, cv2.COLOR_RGB2HSV)
         mask[:, :, 2] = np.uint8(255 * explanation)
         mask = cv2.cvtColor(mask, cv2.COLOR_HSV2RGB)
-        mask = np.float32(mask) / 255
+        mask = float(mask) / 255
         masks.append(mask)
 
-    mask = np.sum(np.float32(masks), axis=0)
+    mask = np.sum(float(masks), axis=0)
     result = img * image_weight + mask * (1 - image_weight)
     result = np.uint8(result * 255)
 
@@ -165,7 +165,7 @@ def scale_cam_image(cam, target_size=None):
         if target_size is not None:
             img = cv2.resize(img, target_size)
         result.append(img)
-    result = np.float32(result)
+    result = float(result)
 
     return result
 
