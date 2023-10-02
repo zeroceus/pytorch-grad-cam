@@ -76,7 +76,7 @@ class DeepFeatureFactorization:
         if self.computation_on_concepts:
             with torch.no_grad():
                 concept_tensors = torch.from_numpy(
-                    np.float32(concepts).transpose((1, 0)))
+                    float(concepts).transpose((1, 0)))
                 concept_outputs = self.computation_on_concepts(
                     concept_tensors).cpu().numpy()
             return concepts, processed_explanations, concept_outputs
